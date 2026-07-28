@@ -17,6 +17,7 @@ useEffect(() => {
 
 async function fetchDashboard() {
     try {
+        
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
@@ -33,38 +34,62 @@ async function fetchDashboard() {
         console.log(error);
     }
 }
-    return (
-        <>
-            <h1 className="text-3xl font-bold">
-                Welcome Back 👋
+return (
+    <div>
+
+        {/* Heading */}
+
+        <div className="mb-8">
+
+            <h1 className="text-4xl font-bold text-gray-800">
+                Dashboard Overview
             </h1>
 
             <p className="text-gray-500 mt-2">
-                Here's your dashboard overview.
+                Welcome back, Admin. Here's what's happening today.
             </p>
 
-            <div className="grid grid-cols-3 gap-6 mt-8">
+        </div>
 
-                <DashboardCard
-                    title="Total Students"
-                    value={dashboardData.totalStudents}
-                />
+        {/* Cards */}
 
-                <DashboardCard
-                    title="Total Teachers"
-                    value="10"
-                />
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-                <DashboardCard
-                    title="Total Courses"
-                 value={dashboardData.totalCourse}
-                />
+            <DashboardCard
+                title="Total Students"
+                value={dashboardData.totalStudents}
+                icon="students"
+                badge="+12%"
+            />
 
-            </div>
-                        <RecentStudents students={dashboardData.recentStudents}/>
+            <DashboardCard
+                title="Total Teachers"
+                value="10"
+                icon="teachers"
+                badge="Stable"
+            />
 
-        </>
-    );
+            <DashboardCard
+                title="Total Courses"
+                value={dashboardData.totalCourse}
+                icon="courses"
+                badge="3 Active"
+            />
+
+        </div>
+
+        {/* Recent Students */}
+
+        <div className="mt-8">
+
+            <RecentStudents
+                students={dashboardData.recentStudents}
+            />
+
+        </div>
+
+    </div>
+);
 }
 
 

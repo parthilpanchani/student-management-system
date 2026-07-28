@@ -1,26 +1,30 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Modal from "react-modal";
+import {
+    FiEye,
+    FiEdit2,
+    FiTrash2,
+} from "react-icons/fi";
 function StudentTable({ students, deleteStudent }) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+
     return (
         <>
-            <div className="bg-white shadow-md rounded-xl mt-6 overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mt-6">
 
                 <table className="w-full">
 
-                    <thead className="bg-gray-100">
+                    <thead className="bg-slate-100 text-xs uppercase text-gray-600">
 
                         <tr>
 
-                            <th className="text-left px-6 py-4">Image</th>
-                            <th className="text-left px-6 py-4">Name</th>
-                            <th className="text-left px-6 py-4">Email</th>
+                            <th className="text-left px-6 py-4">Student</th>
                             <th className="text-left px-6 py-4">Phone</th>
                             <th className="text-left px-6 py-4">Course</th>
-                            <th className="text-left px-6 py-4">Age</th>
+                            <th className="text-left px-6 py-4">Gender</th>
                             <th className="text-center px-6 py-4">Actions</th>
 
                         </tr>
@@ -33,60 +37,77 @@ function StudentTable({ students, deleteStudent }) {
 
                             <tr
                                 key={student._id}
-                                className="border-t hover:bg-gray-50"
+                                className="border-t border-gray-100 hover:bg-slate-50 transition"
                             >
 
-                                <td className="px-6 py-4">
-                                    <img
-                                        src="https://placehold.co/50x50"
-                                        alt="Student"
-                                        className="w-12 h-12 rounded-full"
-                                    />
+                                <td className="px-6 py-5">
+
+                                    <div className="flex items-center gap-4">
+
+                                        <img
+                                            src="https://placehold.co/50x50"
+                                            alt="Student"
+                                            className="w-12 h-12 rounded-full"
+                                        />
+
+                                        <div>
+
+                                            <h3 className="font-semibold text-gray-900">
+                                                {student.name}
+                                            </h3>
+
+                                            <p className="text-sm text-gray-500">
+                                                {student.email}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
                                 </td>
 
-                                <td className="px-6 py-4">
-                                    {student.name}
-                                </td>
-
-                                <td className="px-6 py-4">
-                                    {student.email}
-                                </td>
-
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-5 text-gray-700">
                                     {student.phone}
                                 </td>
 
-                                <td className="px-6 py-4">
-                                    {student.course?.name}
+                                <td className="px-6 py-5">
+
+                                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                                        {student.course?.name}
+                                    </span>
+
                                 </td>
 
-                                <td className="px-6 py-4">
-                                    {student.age}
+                                <td className="px-6 py-5 text-gray-700 capitalize">
+                                    {student.gender}
                                 </td>
 
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-5">
 
-                                    <div className="flex justify-center gap-2">
+                                    <div className="flex justify-center items-center gap-5">
 
                                         <button
                                             onClick={() => {
                                                 setSelectedStudent(student);
                                                 setIsOpen(true);
                                             }}
-                                            className="bg-green-500 text-white px-3 py-2 rounded"
+                                            className="text-gray-500 hover:text-blue-600 transition"
                                         >
-                                            View
+                                            <FiEye size={18} />
                                         </button>
 
                                         <Link
                                             to={`/edit-student/${student._id}`}
-                                            className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
-                                            Edit
+                                            className="text-gray-500 hover:text-green-600 transition"
+                                        >
+                                            <FiEdit2 size={18} />
                                         </Link>
 
-                                        <button onClick={() => deleteStudent(student._id)}
-                                            className="bg-red-500 text-white px-4 py-2 rounded">
-                                            Delete
+                                        <button
+                                            onClick={() => deleteStudent(student._id)}
+                                            className="text-gray-500 hover:text-red-600 transition"
+                                        >
+                                            <FiTrash2 size={18} />
                                         </button>
 
                                     </div>
@@ -102,44 +123,107 @@ function StudentTable({ students, deleteStudent }) {
                 </table>
 
             </div>
+
             <Modal
                 isOpen={isOpen}
                 onRequestClose={() => setIsOpen(false)}
                 ariaHideApp={false}
-                className="bg-white w-2/3 p-6 rounded-lg shadow-xl mx-auto mt-24 relative"
+                className="bg-white w-[650px] rounded-2xl shadow-xl p-8 mx-auto mt-24 relative"
                 overlayClassName="fixed inset-0 bg-black/50 flex justify-center items-start"
             >
-                <button
-                    onClick={() => setIsOpen(false)}
-                    className="absolute top-3 right-3 text-2xl font-bold"
-                >
 
-                </button>
                 <button
                     onClick={() => setIsOpen(false)}
-                    className="absolute top-3 right-3 text-2xl font-bold"
+                    className="absolute top-4 right-5 text-3xl text-gray-500 hover:text-red-500"
                 >
                     ×
                 </button>
 
                 {selectedStudent && (
-                    <>
-                        <h2 className="text-2xl font-bold mb-4">
-                            Student Details
-                        </h2>
 
-                        <p><strong>Name:</strong> {selectedStudent.name}</p>
-                        <p><strong>Email:</strong> {selectedStudent.email}</p>
-                        <p><strong>Phone:</strong> {selectedStudent.phone}</p>
-                        <p><strong>Age:</strong> {selectedStudent.age}</p>
-                        <p><strong>Gender:</strong> {selectedStudent.gender}</p>
-                        <p><strong>Course:</strong> {selectedStudent.course?.name}</p>
-                    </>
+                    <div>
+
+                        <div className="flex items-center gap-5 mb-8">
+
+                            <img
+                                src="https://placehold.co/80"
+                                alt="Student"
+                                className="w-20 h-20 rounded-full"
+                            />
+
+                            <div>
+
+                                <h2 className="text-3xl font-bold">
+                                    {selectedStudent.name}
+                                </h2>
+
+                                <p className="text-gray-500">
+                                    {selectedStudent.email}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-6">
+
+                            <div>
+
+                                <p className="text-sm text-gray-500">
+                                    Phone
+                                </p>
+
+                                <p className="font-semibold">
+                                    {selectedStudent.phone}
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-sm text-gray-500">
+                                    Age
+                                </p>
+
+                                <p className="font-semibold">
+                                    {selectedStudent.age}
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-sm text-gray-500">
+                                    Gender
+                                </p>
+
+                                <p className="font-semibold capitalize">
+                                    {selectedStudent.gender}
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-sm text-gray-500">
+                                    Course
+                                </p>
+
+                                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                                    {selectedStudent.course?.name}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 )}
-            </Modal>
-        </>
 
+            </Modal>
+
+        </>
     );
 }
-
 export default StudentTable;

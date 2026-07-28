@@ -15,12 +15,11 @@ function Navbar() {
 
     return (
         <nav className="bg-white shadow-md px-8 py-4 flex items-center justify-between">
-            {/* Logo */}
+   
             <h1 className="text-2xl font-bold text-blue-600">
                 Student Management
             </h1>
 
-            {/* Navigation */}
             <div className="flex items-center gap-6">
 
                 <NavLink

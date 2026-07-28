@@ -9,6 +9,7 @@ import EditStudent from "./pages/EditStudent";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./layouts/DashboardLayout";
+import Courses from "./pages/Courses";
 
 function App() {
   return (
@@ -24,14 +25,14 @@ function App() {
         <Route element={<ProtectedRoute />}>
 
           <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/students" element={<Students />} />
+            <Route path="/students" element={<Students />} />
 
-          <Route path="/add-student" element={<AddStudent />} />
+            <Route path="/add-student" element={<AddStudent />} />
 
-          <Route path="/edit-student/:id" element={<AddStudent />}
-/>
+            <Route path="/edit-student/:id" element={<AddStudent />}/>
+            <Route path="/courses" element={<Courses />}/>
           </Route>
         </Route>
       </Routes>

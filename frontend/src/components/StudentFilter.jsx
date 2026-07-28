@@ -68,12 +68,12 @@ function StudentFilter({ search, setSearch, selectedCourse, setSelectedCourse, s
                 </div>
 
 
-                <Link
+                {/* <Link
                     to="/add-student"
                     className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
                     + Add Student
-                </Link>
+                </Link> */}
 
             </div>
 

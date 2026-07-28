@@ -141,144 +141,214 @@ setFormData({
         }
     }, [id]);
 
-    return (
-        <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
+return (
+    <div className="max-w-6xl mx-auto">
 
-            <h1 className="text-3xl font-bold mb-8">
-                {id ? "Edit Student" : "Add Student"}
+        <div className="mb-8">
+
+            <p className="text-blue-600 text-sm font-medium mb-3">
+                Student Management / {id ? "Edit Student" : "Add New Student"}
+            </p>
+
+            <h1 className="text-4xl font-bold text-gray-900">
+                {id ? "Edit Student" : "Registration"}
             </h1>
-            {error && (
-                <p className="text-red-500">
-                    {error}
-                </p>
-            )}
+
+            <p className="text-gray-500 mt-2">
+                Please fill out the details below to enroll a new student into the academy database.
+            </p>
+
+        </div>
+
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+
+            <div className="bg-slate-50 px-8 py-5 border-b border-gray-200">
+
+                <h2 className="text-2xl font-semibold">
+                    Student Information
+                </h2>
+
+            </div>
+
             <form
                 onSubmit={handleSubmit}
-                className="space-y-6"
+                className="p-8"
             >
-                <div>
-                    <label className="font-medium">
-                        Full Name
-                    </label>
 
-                    <Input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Enter student name"
-                    />
-                </div>
+                {error && (
+                    <p className="text-red-500 mb-6">
+                        {error}
+                    </p>
+                )}
 
-                <div>
-                    <label className="font-medium">
-                        Email
-                    </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <Input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Enter email"
-                    />
-                </div>
+                    <div>
 
-                <div>
-                    <label className="font-medium">
-                        Phone
-                    </label>
+                        <label className="block text-sm font-semibold mb-2">
+                            Full Name
+                        </label>
 
-                    <Input
-                        type="text"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="Enter phone number"
-                    />
-                </div>
+                        <Input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter full name"
+                        />
 
-                <div>
-                    <label className="font-medium">
-                        Course
-                    </label>
-                    <select
-                        name="course"
-                        value={formData.course}
-                        onChange={handleChange}
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
-                    >
-                        <option value="">Select Course</option>
+                    </div>
 
-                        {courses.map((course) => (
-                            <option key={course._id} value={course._id}>
-                                {course.name}
+                    <div>
+
+                        <label className="block text-sm font-semibold mb-2">
+                            Email Address
+                        </label>
+
+                        <Input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="Enter email address"
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className="block text-sm font-semibold mb-2">
+                            Phone Number
+                        </label>
+
+                        <Input
+                            type="text"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="Enter phone number"
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className="block text-sm font-semibold mb-2">
+                            Course Selection
+                        </label>
+
+                        <select
+                            name="course"
+                            value={formData.course}
+                            onChange={handleChange}
+                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-blue-600"
+                        >
+
+                            <option value="">
+                                Select Course
                             </option>
-                        ))}
-                    </select>
-                </div>
 
-                <div>
-                    <label className="font-medium">
-                        Age
-                    </label>
+                            {courses.map((course) => (
 
-                    <Input
-                        type="number"
-                        name="age"
-                        value={formData.age}
-                        onChange={handleChange}
-                        placeholder="Enter age"
-                    />
-                </div>
+                                <option
+                                    key={course._id}
+                                    value={course._id}
+                                >
+                                    {course.name}
+                                </option>
 
-                <div>
+                            ))}
 
-                    <label className="font-medium block mb-3">
-                        Gender
-                    </label>
+                        </select>
 
-                    <div className="flex gap-6">
+                    </div>
 
-                        <label className="flex items-center gap-2">
+                    <div>
 
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="male"
-                                checked={formData.gender === "male"}
-                                onChange={handleChange}
-                            />
-
-                            Male
-
+                        <label className="block text-sm font-semibold mb-2">
+                            Age
                         </label>
 
-                        <label className="flex items-center gap-2">
+                        <Input
+                            type="number"
+                            name="age"
+                            value={formData.age}
+                            onChange={handleChange}
+                            placeholder="Enter age"
+                        />
 
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="female"
-                                checked={formData.gender === "female"}
-                                onChange={handleChange}
-                            />
+                    </div>
 
-                            Female
+                    <div>
 
+                        <label className="block text-sm font-semibold mb-3">
+                            Gender
                         </label>
+
+                        <div className="flex items-center gap-8">
+
+                            <label className="flex items-center gap-2">
+
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="male"
+                                    checked={formData.gender === "male"}
+                                    onChange={handleChange}
+                                />
+
+                                Male
+
+                            </label>
+
+                            <label className="flex items-center gap-2">
+
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="female"
+                                    checked={formData.gender === "female"}
+                                    onChange={handleChange}
+                                />
+
+                                Female
+
+                            </label>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                <Button type="submit">
-         {id ? "Update Student" : "Add Student"}
-                </Button>
+<div className="border-t border-gray-200 mt-10 pt-8">
+
+    <div className="flex justify-end items-center gap-4">
+
+<button
+    type="button"
+    onClick={() => navigate("/students")}
+    className="px-8 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition"
+>
+    Cancel
+</button>
+
+        <button
+            type="submit"
+            className="px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-sm transition"
+        >
+            {id ? "Update Student" : "Submit Registration"}
+        </button>
+
+    </div>
+
+</div>
 
             </form>
 
         </div>
-    );
+
+    </div>
+);
 }
 export default AddStudent;

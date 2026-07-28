@@ -4,6 +4,7 @@ import Pagination from "../components/Pagination";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
+import { Link } from "react-router-dom";
 
 
 function Students() {
@@ -81,10 +82,28 @@ function Students() {
     return (
         <div className="p-6">
 
-            <h1 className="text-3xl font-bold">
-                Student Management
-            </h1>
+         <div className="flex justify-between items-center mb-8">
 
+    <div>
+
+        <h1 className="text-4xl font-bold text-gray-900">
+            Students
+        </h1>
+
+        <p className="text-gray-500 mt-2">
+            Manage and organize student enrollments across all departments.
+        </p>
+
+    </div>
+
+    <Link
+        to="/add-student"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2"
+    >
+        + Add New Student
+    </Link>
+
+</div>
             <StudentFilter
                 search={search}
                 setSearch={setSearch}
