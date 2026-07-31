@@ -1,63 +1,59 @@
-import StudentFilter from "../components/StudentFilter";
-import StudentTable from "../components/StudentTable";
+import TeacherFilter from "../components/TeacherFilter";
+import TeacherTable from "../components/TeacherTable";
 import Pagination from "../components/Pagination";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Modal from "react-modal";
 import { Link } from "react-router-dom";
 
-
-function Students() {
+function Teacher() {
     const [search, setSearch] = useState("");
-    const [students, setStudents] = useState([]);
+    const [teachers, setTeachers] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [totalStudents, setTotalStudents] = useState(0);
+    const [totalTeachers, setTotalTeachers] = useState(0);
     const [selectedCourse, setSelectedCourse] = useState("");
-    const [selectedGender, setSelectedGender] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
 
-    async function fetchStudents() {
+    const fetchTeachers = async () => {
         try {
 
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:5000/api/auth/students?page=${page}&limit=5&search=${search}&course=${selectedCourse}&gender=${selectedGender}`,
+                `http://localhost:5000/api/auth/teacher?page=${page}&limit=5&search=${search}&course=${selectedCourse}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 }
+
             );
-            // console.log(response.data);
-            // console.log("Current Page:", page);
-            // console.log("Total Pages:", response.data.totalPages);
-            setStudents(response.data.students);
+            console.log(response.data);
+            setTeachers(response.data.teachers);
             setTotalPages(response.data.totalPages);
-            setTotalStudents(response.data.totalStudents);
-        }
-        catch (error) {
+            setTotalTeachers(response.data.totalTeachers);
+        } catch (error) {
             console.log(error);
         }
-    }
+    };
+
     useEffect(() => {
-        fetchStudents();
-    }, [search, page, selectedCourse, selectedGender]);
+        fetchTeachers();
+    }, [page, search, selectedCourse]);
+
     useEffect(() => {
         setPage(1);
-    }, [search, selectedCourse, selectedGender]);
+    }, [search, selectedCourse]);
 
     const limit = 5;
 
-    const startStudent = (page - 1) * limit + 1;
+    const startTeacher = (page - 1) * limit + 1;
 
-    const endStudent = Math.min(page * limit, totalStudents);
+    const endTeacher = Math.min(page * limit, totalTeachers);
 
-    const deleteStudent = async (id) => {
+    const deleteTeacher = async (id) => {
         try {
             const confirmDelete = window.confirm(
-                "Are you sure you want to delete this student?"
+                "Are you sure you want to delete this teacher?"
             );
 
             if (!confirmDelete) return;
@@ -65,7 +61,7 @@ function Students() {
             const token = localStorage.getItem("token");
 
             await axios.delete(
-                `http://localhost:5000/api/auth/students/${id}`,
+                `http://localhost:5000/api/auth/teacher/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -73,63 +69,69 @@ function Students() {
                 }
             );
 
-            fetchStudents();
-
+            fetchTeachers();
         } catch (error) {
             console.log(error);
         }
     };
+
     return (
         <div className="p-6">
+
+            {/* Header */}
 
             <div className="flex justify-between items-center mb-8">
 
                 <div>
 
                     <h1 className="text-4xl font-bold text-gray-900">
-                        Students
+                        Teachers
                     </h1>
 
                     <p className="text-gray-500 mt-2">
-                        Manage and organize student enrollments across all departments.
+                        Manage and organize teachers across all departments.
                     </p>
 
                 </div>
 
                 <Link
-                    to="/add-student"
+                    to="/add-teacher"
                     className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2"
                 >
-                    + Add New Student
+                    + Add New Teacher
                 </Link>
 
             </div>
-            <StudentFilter
+
+            {/* Filter */}
+
+            <TeacherFilter
                 search={search}
                 setSearch={setSearch}
                 selectedCourse={selectedCourse}
                 setSelectedCourse={setSelectedCourse}
-                selectedGender={selectedGender}
-                setSelectedGender={setSelectedGender}
             />
 
-            <StudentTable
-                students={students}
-                deleteStudent={deleteStudent}
+            {/* Table */}
+
+            <TeacherTable
+                teachers={teachers}
+                deleteTeacher={deleteTeacher}
             />
+
+            {/* Pagination */}
 
             <Pagination
                 page={page}
                 setPage={setPage}
                 totalPages={totalPages}
-                startStudent={startStudent}
-                endStudent={endStudent}
-                totalStudents={totalStudents}
-
+                startStudent={(page - 1) * 5 + 1}
+                endStudent={Math.min(page * 5, totalTeachers)}
+                totalStudents={totalTeachers}
             />
 
         </div>
     );
 }
 
-export default Students;
+export default Teacher;

@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Courses from "./pages/Courses";
 import AddCourse from "./pages/AddCourses";
+import Teacher from "./pages/Teacher";
+import AddTeacher from "./pages/AddTeacher";
 
 function App() {
   return (
@@ -37,6 +39,11 @@ function App() {
             <Route path="/courses" element={<Courses />} />
             <Route path="/add-course" element={<AddCourse />} />
             <Route path="/edit-course/:id" element={<AddCourse />} />
+
+             <Route path="/teacher" element={<Teacher />} />
+             <Route path="/add-teacher" element={<AddTeacher />} />
+            <Route path="/edit-teacher/:id" element={<AddTeacher />} />
+
           </Route>
         </Route>
       </Routes>

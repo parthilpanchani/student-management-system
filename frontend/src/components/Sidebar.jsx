@@ -56,7 +56,7 @@ function Sidebar() {
                     </NavLink>
 
                     <NavLink
-                        to="/teachers"
+                        to="/teacher"
                         className={menuClass}
                     >
                         <FiUserCheck size={20} />

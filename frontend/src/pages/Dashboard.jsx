@@ -8,6 +8,7 @@ function Dashboard() {
     totalStudents: 0,
     recentStudents: [],
     totalCourse: 0,
+    totalTeacher: 0,
     
 });
 
@@ -64,7 +65,7 @@ return (
 
             <DashboardCard
                 title="Total Teachers"
-                value="10"
+                value={dashboardData.totalTeacher}
                 icon="teachers"
                 badge="Stable"
             />

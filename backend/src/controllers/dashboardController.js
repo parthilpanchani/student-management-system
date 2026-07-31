@@ -1,12 +1,13 @@
 const Course = require("../models/Course");
 const Student = require("../models/Student");
-
+const Teacher = require("../models/Teacher")
 
 const getDashboard = async (req, res) => {
     try {
 
         const totalStudents = await Student.countDocuments();
         const totalCourse = await Course.countDocuments();
+        const totalTeacher = await Teacher.countDocuments();
 
         const recentStudents = await Student.find()
             .populate("course", "name")
@@ -17,7 +18,8 @@ const getDashboard = async (req, res) => {
         res.status(200).json({
             totalStudents,
             totalCourse,
-            recentStudents
+            recentStudents,
+            totalTeacher
         });
 
     } catch (error) {
