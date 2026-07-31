@@ -11,6 +11,14 @@ const { createStudent, getAllStudents, getStudentById, updateStudent, deleteStud
 const { getDashboard } = require("../controllers/dashboardController");
 const { createCourse, getAllCourses,updateCourse,getCourseById,deleteCourse } = require("../controllers/courseController")
 const { createTeacher,getAllTeacher,getTeacherById,updateTeacher,deleteTeacher } = require("../controllers/teacherController");
+const {
+  getProfile,
+    updateProfile,
+    uploadProfileImage,
+    getProfileImage,
+     changePassword,
+} = require("../controllers/profileController");
+const upload = require("../middleware/uploadMiddleware");
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
@@ -81,4 +89,39 @@ router.put(
     "/teacher/:id",authMiddleware,validateTeacher,roleMiddleware("admin"),updateTeacher);
 router.delete(
     "/teacher/:id",authMiddleware,roleMiddleware("admin"),deleteTeacher);
+
+
+
+router.get(
+    "/profile",
+    authMiddleware,
+    getProfile
+);
+router.get(
+    "/profile/image",
+    authMiddleware,
+    getProfileImage
+);
+router.put(
+    "/profile",
+    authMiddleware,
+    updateProfile
+);
+router.put(
+    "/profile/image",
+    authMiddleware,
+    upload.single("profileImage"),
+    uploadProfileImage
+);
+router.put(
+    "/profile/password",
+    authMiddleware,
+    changePassword
+);
+
+// router.get(
+//     "/profile",
+//     authMiddleware,
+//     getProfile
+// );  
 module.exports = router;

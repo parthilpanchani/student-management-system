@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
       },
       default: "admin",
     },
+    profileImage: {
+    data: Buffer,
+    contentType: String,
+},
   },
   {
     timestamps: true,
