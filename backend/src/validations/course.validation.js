@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const validateCourse = require("../middleware/courseValidation");
 
 const courseSchema = Joi.object({
     name: Joi.string()

@@ -37,16 +37,20 @@ const getAllCourses = async (req, res, next) => {
             page = 1,
             limit = 5,
             search = "",
+            status = "",
             sort = "name"
         } = req.query;
 
-        const searchFilter = {
+        let searchFilter = {
             name: {
                 $regex: search,
-                $options: "i"
-            }
+                $options: "i",
+            },
         };
 
+        if (status) {
+            searchFilter.status = status;
+        }
         const pageNumber = Number(page);
         const limitNumber = Number(limit);
 

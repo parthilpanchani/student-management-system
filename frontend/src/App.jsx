@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Courses from "./pages/Courses";
+import AddCourse from "./pages/AddCourses";
 
 function App() {
   return (
@@ -31,8 +32,11 @@ function App() {
 
             <Route path="/add-student" element={<AddStudent />} />
 
-            <Route path="/edit-student/:id" element={<AddStudent />}/>
-            <Route path="/courses" element={<Courses />}/>
+            <Route path="/edit-student/:id" element={<AddStudent />} />
+
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/add-course" element={<AddCourse />} />
+            <Route path="/edit-course/:id" element={<AddCourse />} />
           </Route>
         </Route>
       </Routes>

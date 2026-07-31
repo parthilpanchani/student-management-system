@@ -15,7 +15,6 @@ function Courses() {
     const [selectedStatus, setSelectedStatus] = useState("");
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     async function fetchCourses() {
 
         try {

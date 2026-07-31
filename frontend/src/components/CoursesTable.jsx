@@ -1,5 +1,5 @@
 import { FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
-
+import { useNavigate } from "react-router-dom";
 function CoursesTable({
     courses,
     deleteCourse,
@@ -7,6 +7,7 @@ function CoursesTable({
 
 }) {
 
+    const navigate = useNavigate();
     return (
 
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
@@ -109,7 +110,8 @@ function CoursesTable({
                                             <FiEye size={18} />
                                         </button>
 
-                                        <button className="text-gray-500 hover:text-green-600">
+                                        <button onClick={() => navigate(`/edit-course/${course._id}`)}
+                                            className="text-gray-500 hover:text-green-600">
                                             <FiEdit2 size={18} />
                                         </button>
 
