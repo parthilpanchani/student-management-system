@@ -84,10 +84,9 @@ function Teacher() {
 
                 <div>
 
-                    <h1 className="text-4xl font-bold text-gray-900">
+                    <h1 className="text-3xl md:text-4xl font-bold">
                         Teachers
                     </h1>
-
                     <p className="text-gray-500 mt-2">
                         Manage and organize teachers across all departments.
                     </p>
@@ -96,7 +95,7 @@ function Teacher() {
 
                 <Link
                     to="/add-teacher"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg"
                 >
                     + Add New Teacher
                 </Link>

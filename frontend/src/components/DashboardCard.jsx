@@ -19,8 +19,7 @@ function DashboardCard({
 
     return (
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-
+        <div className="bg-white dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-xl p-6 transition-colors duration-300"> 
             <div className="flex justify-between items-center">
 
                 <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex justify-center items-center">
@@ -37,13 +36,13 @@ function DashboardCard({
 
             </div>
 
-            <p className="uppercase text-xs tracking-wider text-gray-500 mt-6">
+            <p className="text-gray-500 dark:text-gray-400">
 
                 {title}
 
             </p>
 
-            <h1 className="text-5xl font-bold text-gray-900 mt-2">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
 
                 {value}
 

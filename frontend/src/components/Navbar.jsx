@@ -1,71 +1,45 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { FiMenu, FiMoon, FiSun } from "react-icons/fi";
+import { useTheme } from "../context/ThemeContext";
 
-function Navbar() {
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/", { replace: true });
-    };
-
-    const navClass = ({ isActive }) =>
-        isActive
-            ? "text-blue-600 font-semibold"
-            : "text-gray-700 hover:text-blue-600 transition";
+function Navbar({ setIsOpen }) {
+    const { theme, toggleTheme } = useTheme();
 
     return (
-        <nav className="bg-white shadow-md px-8 py-4 flex items-center justify-between">
-   
-            <h1 className="text-2xl font-bold text-blue-600">
-                Student Management
-            </h1>
+        <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 h-16 px-4 md:px-6 flex items-center justify-between transition-colors">
 
-            <div className="flex items-center gap-6">
-
-                <NavLink
-                    to="/dashboard"
-                    className={navClass}    
-                >
-                    Dashboard
-                </NavLink>
-
-                <NavLink
-                    to="/students"
-                    className={navClass}
-                >
-                    Students
-                </NavLink>
-
-                <NavLink
-                    to="/teachers"
-                    className={navClass}
-                >
-                    Teachers
-                </NavLink>
-
-                <NavLink
-                    to="/courses"
-                    className={navClass}
-                >
-                    Courses
-                </NavLink>
-
-                <NavLink
-                    to="/profile"
-                    className={navClass}
-                >
-                    Profile
-                </NavLink>
+            {/* Left */}
+            <div className="flex items-center gap-4">
 
                 <button
-                    onClick={handleLogout}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+                    onClick={() => setIsOpen(true)}
+                    className="md:hidden text-2xl"
                 >
-                    Logout
+                    <FiMenu />
+                </button>
+
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Student Management System
+                </h1>
+
+            </div>
+
+            {/* Right */}
+            <div className="flex items-center gap-3">
+
+                <button
+                    onClick={toggleTheme}
+                    className="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                >
+                    {theme === "light" ? (
+                        <FiMoon className="text-xl text-gray-700 dark:text-white" />
+                    ) : (
+                        <FiSun className="text-xl text-yellow-400" />
+                    )}
                 </button>
 
             </div>
-        </nav>
+
+        </header>
     );
 }
 

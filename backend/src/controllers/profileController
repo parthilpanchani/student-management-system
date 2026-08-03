@@ -177,5 +177,5 @@ module.exports = {
     updateProfile,
     uploadProfileImage,
     getProfileImage,
-        changePassword,
+    changePassword,
 };

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function AddStudent() {
     const { id } = useParams();
-const navigate = useNavigate();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -16,7 +16,7 @@ const navigate = useNavigate();
         age: "",
         gender: ""
     });
-    
+
     const [error, setError] = useState("");
     const [courses, setCourses] = useState([]);
 
@@ -64,23 +64,23 @@ const navigate = useNavigate();
             }
 
             setError("");
-alert(
-    id
-        ? "Student updated successfully!"
-        : "Student added successfully!"
-);
+            alert(
+                id
+                    ? "Student updated successfully!"
+                    : "Student added successfully!"
+            );
 
-navigate("/students");
-if (!id) {
-            setFormData({
-                name: "",
-                email: "",
-                phone: "",
-                course: "",
-                age: "",
-                gender: ""
-            });
-        }
+            navigate("/students");
+            if (!id) {
+                setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    course: "",
+                    age: "",
+                    gender: ""
+                });
+            }
         } catch (error) {
             console.log(error.response?.status);
             console.log(error.response?.data);
@@ -122,14 +122,14 @@ if (!id) {
                     },
                 }
             );
-setFormData({
-        name: response.data.student.name,
-        email: response.data.student.email,
-        phone: response.data.student.phone,
-        course: response.data.student.course._id,
-        age: response.data.student.age,
-        gender: response.data.student.gender,
-    });
+            setFormData({
+                name: response.data.student.name,
+                email: response.data.student.email,
+                phone: response.data.student.phone,
+                course: response.data.student.course._id,
+                age: response.data.student.age,
+                gender: response.data.student.gender,
+            });
 
         } catch (error) {
             console.log(error);
@@ -141,214 +141,212 @@ setFormData({
         }
     }, [id]);
 
-return (
-    <div className="max-w-6xl mx-auto">
+    return (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="mb-8">
+            <div className="mb-8">
 
-            <p className="text-blue-600 text-sm font-medium mb-3">
-                Student Management / {id ? "Edit Student" : "Add New Student"}
-            </p>
+                <p className="text-blue-600 text-sm font-medium mb-3">
+                    Student Management / {id ? "Edit Student" : "Add New Student"}
+                </p>
+                <h1 className="text-4xl font-bold">
+                    {id ? "Edit Student" : "Registration"}
+                </h1>
 
-            <h1 className="text-4xl font-bold text-gray-900">
-                {id ? "Edit Student" : "Registration"}
-            </h1>
-
-            <p className="text-gray-500 mt-2">
-                Please fill out the details below to enroll a new student into the academy database.
-            </p>
-
-        </div>
-
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-
-            <div className="bg-slate-50 px-8 py-5 border-b border-gray-200">
-
-                <h2 className="text-2xl font-semibold">
-                    Student Information
-                </h2>
+                <p className="text-gray-500 mt-2">
+                    Please fill out the details below to enroll a new student into the academy database.
+                </p>
 
             </div>
 
-            <form
-                onSubmit={handleSubmit}
-                className="p-8"
-            >
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
 
-                {error && (
-                    <p className="text-red-500 mb-6">
-                        {error}
-                    </p>
-                )}
+                <div className="bg-slate-50 px-4 sm:px-6 lg:px-8 py-5 border-b border-gray-200">
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <h2 className="text-2xl font-semibold">
+                        Student Information
+                    </h2>
 
-                    <div>
+                </div>
 
-                        <label className="block text-sm font-semibold mb-2">
-                            Full Name
-                        </label>
+           <form className="p-4 sm:p-6 lg:p-8"
+                    onSubmit={handleSubmit}
+                >
 
-                        <Input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="Enter full name"
-                        />
+                    {error && (
+                        <p className="text-red-500 mb-6">
+                            {error}
+                        </p>
+                    )}
 
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <div>
+                        <div>
 
-                        <label className="block text-sm font-semibold mb-2">
-                            Email Address
-                        </label>
+                            <label className="block text-sm font-semibold mb-2">
+                                Full Name
+                            </label>
 
-                        <Input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Enter email address"
-                        />
+                            <Input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder="Enter full name"
+                            />
 
-                    </div>
+                        </div>
 
-                    <div>
+                        <div>
 
-                        <label className="block text-sm font-semibold mb-2">
-                            Phone Number
-                        </label>
+                            <label className="block text-sm font-semibold mb-2">
+                                Email Address
+                            </label>
 
-                        <Input
-                            type="text"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="Enter phone number"
-                        />
+                            <Input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="Enter email address"
+                            />
 
-                    </div>
+                        </div>
 
-                    <div>
+                        <div>
 
-                        <label className="block text-sm font-semibold mb-2">
-                            Course Selection
-                        </label>
+                            <label className="block text-sm font-semibold mb-2">
+                                Phone Number
+                            </label>
 
-                        <select
-                            name="course"
-                            value={formData.course}
-                            onChange={handleChange}
-                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-blue-600"
-                        >
+                            <Input
+                                type="text"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="Enter phone number"
+                            />
 
-                            <option value="">
-                                Select Course
-                            </option>
+                        </div>
 
-                            {courses.map((course) => (
+                        <div>
 
-                                <option
-                                    key={course._id}
-                                    value={course._id}
-                                >
-                                    {course.name}
+                            <label className="block text-sm font-semibold mb-2">
+                                Course Selection
+                            </label>
+
+                            <select
+                                name="course"
+                                value={formData.course}
+                                onChange={handleChange}
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-blue-600"
+                            >
+
+                                <option value="">
+                                    Select Course
                                 </option>
 
-                            ))}
+                                {courses.map((course) => (
 
-                        </select>
+                                    <option
+                                        key={course._id}
+                                        value={course._id}
+                                    >
+                                        {course.name}
+                                    </option>
 
-                    </div>
+                                ))}
 
-                    <div>
+                            </select>
 
-                        <label className="block text-sm font-semibold mb-2">
-                            Age
-                        </label>
+                        </div>
 
-                        <Input
-                            type="number"
-                            name="age"
-                            value={formData.age}
-                            onChange={handleChange}
-                            placeholder="Enter age"
-                        />
+                        <div>
 
-                    </div>
-
-                    <div>
-
-                        <label className="block text-sm font-semibold mb-3">
-                            Gender
-                        </label>
-
-                        <div className="flex items-center gap-8">
-
-                            <label className="flex items-center gap-2">
-
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="male"
-                                    checked={formData.gender === "male"}
-                                    onChange={handleChange}
-                                />
-
-                                Male
-
+                            <label className="block text-sm font-semibold mb-2">
+                                Age
                             </label>
 
-                            <label className="flex items-center gap-2">
+                            <Input
+                                type="number"
+                                name="age"
+                                value={formData.age}
+                                onChange={handleChange}
+                                placeholder="Enter age"
+                            />
 
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="female"
-                                    checked={formData.gender === "female"}
-                                    onChange={handleChange}
-                                />
+                        </div>
 
-                                Female
+                        <div>
 
+                            <label className="block text-sm font-semibold mb-3">
+                                Gender
                             </label>
+
+                           <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+
+                                <label className="flex items-center gap-2">
+
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        value="male"
+                                        checked={formData.gender === "male"}
+                                        onChange={handleChange}
+                                    />
+
+                                    Male
+
+                                </label>
+
+                                <label className="flex items-center gap-2">
+
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        value="female"
+                                        checked={formData.gender === "female"}
+                                        onChange={handleChange}
+                                    />
+
+                                    Female
+
+                                </label>
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                    <div className="border-t border-gray-200 mt-10 pt-8">
 
-<div className="border-t border-gray-200 mt-10 pt-8">
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
 
-    <div className="flex justify-end items-center gap-4">
+                            <button
+                                type="button"
+                                onClick={() => navigate("/students")}
+                                className="px-8 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition"
+                            >
+                                Cancel
+                            </button>
 
-<button
-    type="button"
-    onClick={() => navigate("/students")}
-    className="px-8 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition"
->
-    Cancel
-</button>
+                            <button
+                                type="submit"
+                                className="px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-sm transition"
+                            >
+                                {id ? "Update Student" : "Submit Registration"}
+                            </button>
 
-        <button
-            type="submit"
-            className="px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-sm transition"
-        >
-            {id ? "Update Student" : "Submit Registration"}
-        </button>
+                        </div>
 
-    </div>
+                    </div>
 
-</div>
+                </form>
 
-            </form>
+            </div>
 
         </div>
-
-    </div>
-);
+    );
 }
 export default AddStudent;

@@ -93,7 +93,7 @@ function AddTeacher() {
           Teacher Management / {id ? "Edit Teacher" : "Add New Teacher"}
         </p>
 
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="text-4xl font-bold heading">
           {id ? "Edit Teacher" : "Add Teacher"}
         </h1>
 
@@ -164,21 +164,24 @@ function AddTeacher() {
 
           </div>
 
-          <div className="border-t border-gray-200 mt-10 pt-8 flex justify-end gap-4">
-            <button
-              type="button"
-              onClick={() => navigate("/teacher")}
-              className="px-8 py-3 border rounded-lg"
-            >
-              Cancel
-            </button>
+          <div className="border-t border-gray-200 mt-10 pt-8">
 
-            <button
-              type="submit"
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              {id ? "Update Teacher" : "Add Teacher"}
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+              <button
+                type="button"
+                onClick={() => navigate("/teacher")}
+                className="px-8 py-3 border rounded-lg"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                {id ? "Update Teacher" : "Add Teacher"}
+              </button>
+            </div>
           </div>
         </form>
       </div>

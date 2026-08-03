@@ -73,10 +73,8 @@ function RecentStudents({ students }) {
                                 </div>
 
                             </td>
-
-                            <td className="px-6 py-4">
-
-                                <span className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">
+                            <td className="whitespace-nowrap">
+                                <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">
                                     {student.course?.name}
                                 </span>
 

@@ -199,22 +199,25 @@ function AddCourse() {
                     </div>
 
                 </div>
-                <div className="flex justify-end gap-4 mt-8">
 
-                    <button
-                        type="button"
-                        onClick={() => navigate("/courses")}
-                        className="px-6 py-3 rounded-lg border border-gray-300 hover:bg-gray-100"
-                    >
-                        Cancel
-                    </button>
+                <div className="border-t border-gray-200 mt-10 pt-8">
 
-                    <button
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
-                    >
-                        {id ? "Update Course" : "Submit Course"}
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
 
+                        <button
+                            type="button"
+                            onClick={() => navigate("/courses")}
+                            className="px-6 py-3 rounded-lg border border-gray-300 hover:bg-gray-100"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+                        >
+                            {id ? "Update Course" : "Submit Course"}
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
