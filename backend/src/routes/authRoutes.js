@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser } = require("../controllers/authController");
+const { registerUser, loginUser , forgotPassword } = require("../controllers/authController");
 const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
 const validateStudent = require("../middleware/studentValidation");
@@ -22,12 +22,13 @@ const upload = require("../middleware/uploadMiddleware");
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-
+router.post("/forgot-password", forgotPassword);
 router.post(
     "/students",
     authMiddleware,
     roleMiddleware("admin"),
     validateStudent,
+    upload.single("profileImage"),
     createStudent
 );
 router.get(
@@ -45,6 +46,7 @@ router.get(
 router.put(
     "/students/:id",
     authMiddleware,
+    upload.single("profileImage"),
     roleMiddleware("admin"),
     updateStudent
 );

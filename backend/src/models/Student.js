@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema(
     {
+        profileImage: {
+            data: Buffer,
+            contentType: String,
+        },
         name: {
             type: String,
             required: [true, "Student name is required"],

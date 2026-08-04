@@ -33,90 +33,94 @@ function StudentTable({ students, deleteStudent }) {
 
                         <tbody>
 
-           {students.map((student) => (
+                            {students.map((student) => (
 
-    <tr
-        key={student._id}
-        className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
-    >
+                                <tr
+                                    key={student._id}
+                                    className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                                >
 
-        <td className="px-6 py-5">
+                                    <td className="px-6 py-5">
 
-            <div className="flex items-center gap-4">
+                                        <div className="flex items-center gap-4">
 
-                <img
-                    src="https://placehold.co/50x50"
-                    alt="Student"
-                    className="w-12 h-12 rounded-full"
-                />
+                                            <img
+                                                src={
+                                                    student.profileImage
+                                                        ? student.profileImage
+                                                        : "https://placehold.co/50x50"
+                                                }
+                                                alt={student.name}
+                                                className="w-12 h-12 rounded-full object-cover border"
+                                            />
 
-                <div>
+                                            <div>
 
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
-                        {student.name}
-                    </h3>
+                                                <h3 className="font-semibold text-gray-900 dark:text-white">
+                                                    {student.name}
+                                                </h3>
 
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {student.email}
-                    </p>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                    {student.email}
+                                                </p>
 
-                </div>
+                                            </div>
 
-            </div>
+                                        </div>
 
-        </td>
+                                    </td>
 
-        <td className="px-6 py-5 hidden md:table-cell text-gray-700 dark:text-gray-300">
-            {student.phone}
-        </td>
+                                    <td className="px-6 py-5 hidden md:table-cell text-gray-700 dark:text-gray-300">
+                                        {student.phone}
+                                    </td>
 
-        <td className="px-6 py-5">
+                                    <td className="px-6 py-5">
 
-            <span className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
-                {student.course?.name}
-            </span>
+                                        <span className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
+                                            {student.course?.name}
+                                        </span>
 
-        </td>
+                                    </td>
 
-        <td className="px-6 py-5 capitalize text-gray-700 dark:text-gray-300">
-            {student.gender}
-        </td>
+                                    <td className="px-6 py-5 capitalize text-gray-700 dark:text-gray-300">
+                                        {student.gender}
+                                    </td>
 
-        <td className="px-6 py-5">
+                                    <td className="px-6 py-5">
 
-            <div className="flex justify-center items-center gap-5">
+                                        <div className="flex justify-center items-center gap-5">
 
-                <button
-                    onClick={() => {
-                        setSelectedStudent(student);
-                        setIsOpen(true);
-                    }}
-                    className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
-                >
-                    <FiEye size={18} />
-                </button>
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedStudent(student);
+                                                    setIsOpen(true);
+                                                }}
+                                                className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                                            >
+                                                <FiEye size={18} />
+                                            </button>
 
-                <Link
-                    to={`/edit-student/${student._id}`}
-                    className="text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition"
-                >
-                    <FiEdit2 size={18} />
-                </Link>
+                                            <Link
+                                                to={`/edit-student/${student._id}`}
+                                                className="text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition"
+                                            >
+                                                <FiEdit2 size={18} />
+                                            </Link>
 
-                <button
-                    onClick={() => deleteStudent(student._id)}
-                    className="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition"
-                >
-                    <FiTrash2 size={18} />
-                </button>
+                                            <button
+                                                onClick={() => deleteStudent(student._id)}
+                                                className="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition"
+                                            >
+                                                <FiTrash2 size={18} />
+                                            </button>
 
-            </div>
+                                        </div>
 
-        </td>
+                                    </td>
 
-    </tr>
+                                </tr>
 
-))}
+                            ))}
                         </tbody>
 
                     </table>
@@ -143,9 +147,13 @@ function StudentTable({ students, deleteStudent }) {
                         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-8">
 
                             <img
-                                src="https://placehold.co/100"
-                                alt="Student"
-                                className="w-24 h-24 rounded-full object-cover"
+                                src={
+                                    selectedStudent.profileImage
+                                        ? selectedStudent.profileImage
+                                        : "https://placehold.co/100"
+                                }
+                                alt={selectedStudent.name}
+                                className="w-24 h-24 rounded-full object-cover border"
                             />
 
                             <div className="text-center sm:text-left">

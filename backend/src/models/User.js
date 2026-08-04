@@ -37,9 +37,16 @@ const userSchema = new mongoose.Schema(
       default: "admin",
     },
     profileImage: {
-    data: Buffer,
-    contentType: String,
-},
+      data: Buffer,
+      contentType: String,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+
+    resetPasswordExpire: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

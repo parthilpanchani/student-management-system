@@ -27,7 +27,7 @@ function Teacher() {
                 }
 
             );
-            console.log(response.data);
+            // console.log(response.data);
             setTeachers(response.data.teachers);
             setTotalPages(response.data.totalPages);
             setTotalTeachers(response.data.totalTeachers);

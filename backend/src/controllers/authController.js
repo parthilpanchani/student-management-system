@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const transporter = require("../config/mail");
 
 const registerUser = async (req, res) => {
     try {
@@ -53,6 +55,7 @@ const registerUser = async (req, res) => {
         });
     };
 }
+
 const loginUser = async (req, res) => {
 
     try {
@@ -106,7 +109,68 @@ const loginUser = async (req, res) => {
     }
 };
 
+const forgotPassword = async (req, res, next) => {
+    try {
+
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+        const resetToken = crypto.randomBytes(32).toString("hex");
+        const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+        user.resetPasswordToken = resetToken;
+
+        user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+        await user.save();
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: user.email,
+            subject: "Password Reset Request",
+            html: `
+        <h2>Password Reset</h2>
+
+        <p>Hello ${user.name},</p>
+
+        <p>You requested to reset your password.</p>
+
+        <p>Click the button below:</p>
+
+        <a
+            href="${resetUrl}"
+            style="
+                background:#2563eb;
+                color:white;
+                padding:12px 20px;
+                text-decoration:none;
+                border-radius:6px;
+                display:inline-block;
+            "
+        >
+            Reset Password
+        </a>
+
+        <p>This link expires in 15 minutes.</p>
+
+        <p>If you didn't request this, ignore this email.</p>
+    `,
+        });
+        return res.status(200).json({
+            success: true,
+            message: "Reset token generated successfully.",
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    forgotPassword
 };

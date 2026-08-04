@@ -15,14 +15,24 @@ const createStudent = async (req, res, next) => {
             });
         }
 
-        const student = await Student.create({
+        const studentData = {
             name,
             email,
             phone,
             course,
             age,
             gender,
-        });
+        };
+
+        if (req.file) {
+            studentData.profileImage = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype,
+            };
+        }
+
+        const student = await Student.create(studentData);
+
         const studentResponse = {
             id: student._id,
             name: student.name,
@@ -79,15 +89,7 @@ const getAllStudents = async (req, res, next) => {
         const totalStudents = await Student.countDocuments(searchFilter);
         const totalPages = Math.ceil(totalStudents / limitNumber);
         const skip = (pageNumber - 1) * limitNumber;
-
-        console.log(pageNumber);
-        console.log(limitNumber);
-        console.log(skip);
-        console.log(totalStudents);
-
-        // const students = await Student.find().populate("course");
-
-
+     
 
         const students = await Student.find(searchFilter)
             .populate("course", "name")
@@ -95,66 +97,109 @@ const getAllStudents = async (req, res, next) => {
             .sort(sort)
             .limit(limitNumber);
 
-        return res.status(200).json({
-            success: true,
-            currentPage: pageNumber,
-            totalPages,
-            totalStudents,
-            students
-        });
+const studentsWithImages = students.map((student) => {
+    const studentObj = student.toObject();
+
+    if (student.profileImage && student.profileImage.data) {
+
+
+        const buffer = Buffer.isBuffer(student.profileImage.data)
+            ? student.profileImage.data
+            : Buffer.from(student.profileImage.data);
+
+        studentObj.profileImage =
+            `data:${student.profileImage.contentType};base64,${buffer.toString("base64")}`;
+
+    } else {
+        studentObj.profileImage = null;
+    }
+
+    return studentObj;
+});
+
+return res.status(200).json({
+    success: true,
+    students: studentsWithImages,
+    totalStudents,
+    totalPages,
+    currentPage: pageNumber,
+});
+      
+
     } catch (error) {
         next(error);
     }
 };
 const getStudentById = async (req, res, next) => {
     try {
+
         const { id } = req.params;
+
         const student = await Student.findById(id)
             .populate("course", "name");
+
         if (!student) {
             return res.status(404).json({
                 success: false,
-                message: "Student not found"
+                message: "Student not found",
             });
         }
+
+        const studentResponse = {
+            ...student.toObject(),
+
+            profileImage:
+                student.profileImage?.data
+                    ? `data:${student.profileImage.contentType};base64,${student.profileImage.data.toString("base64")}`
+                    : null,
+        };
+
         return res.status(200).json({
             success: true,
-            student
+            student: studentResponse,
         });
+
     } catch (error) {
         next(error);
     }
 };
 const updateStudent = async (req, res, next) => {
     try {
+
         const { id } = req.params;
-        const { name, email, phone, course, age, gender } = req.body;
-        const student = await Student.findByIdAndUpdate(
-            id,
-            {
-                name,
-                email,
-                phone,
-                course,
-                age,
-                gender
-            },
-            {
-                new: true,
-                runValidators: true
-            }
-        );
-        return res.status(200).json({
-            success: true,
-            message: "Student updated successfully",
-            student
-        });
+
+        const student = await Student.findById(id);
+
         if (!student) {
             return res.status(404).json({
                 success: false,
-                message: "Student not found"
+                message: "Student not found",
             });
         }
+
+        student.name = req.body.name;
+        student.email = req.body.email;
+        student.phone = req.body.phone;
+        student.course = req.body.course;
+        student.age = req.body.age;
+        student.gender = req.body.gender;
+
+        // Update image only if a new one is uploaded
+        if (req.file) {
+            student.profileImage = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype,
+            };
+        }
+
+        await student.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Student updated successfully",
+            student,
+        });
+
     } catch (error) {
         next(error);
     }

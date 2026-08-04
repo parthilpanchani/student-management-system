@@ -44,12 +44,12 @@ return (
                                 <td className="px-6 py-5">
 
                                     <div className="flex items-center gap-4">
-
+{/* 
                                         <img
                                             src="https://placehold.co/50x50"
                                             alt="Teacher"
                                             className="w-12 h-12 rounded-full"
-                                        />
+                                        /> */}
 
                                         <div>
 
