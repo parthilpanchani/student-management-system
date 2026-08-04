@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Input from "../ui/Input";
 
 function CoursesFilter({
     search,
@@ -7,27 +7,48 @@ function CoursesFilter({
     setSelectedStatus,
 }) {
 
-    return (
+return (
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-6">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-5 mb-6">
 
-            <div className="flex gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
 
-                <div className="flex-1">
+            {/* Search */}
+            <div className="flex-1">
 
-                    <Input
-                        type="text"
-                        placeholder="Search Course..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                <Input
+                    type="text"
+                    placeholder="Search Course..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
 
-                </div>
+            </div>
+
+            {/* Status Filter */}
+            <div className="w-full lg:w-56">
 
                 <select
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    className="border border-gray-200 rounded-lg px-4 py-3">
+                    className="
+                        w-full
+                        rounded-lg
+                        border
+                        border-gray-300
+                        dark:border-gray-600
+                        bg-white
+                        dark:bg-gray-800
+                        text-gray-900
+                        dark:text-white
+                        px-4
+                        py-3
+                        outline-none
+                        focus:ring-2
+                        focus:ring-blue-500
+                        transition
+                    "
+                >
                     <option value="">
                         All Status
                     </option>
@@ -46,7 +67,9 @@ function CoursesFilter({
 
         </div>
 
-    );
+    </div>
+
+);
 
 }
 

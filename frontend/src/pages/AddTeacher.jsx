@@ -1,4 +1,4 @@
-import Input from "../components/Input";
+import Input from "../ui/Input";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -86,107 +86,159 @@ function AddTeacher() {
     }
   }
 
-  return (
-    <div className="max-w-6xl mx-auto">
-      <div className="mb-8">
-        <p className="text-blue-600 text-sm font-medium mb-3">
-          Teacher Management / {id ? "Edit Teacher" : "Add New Teacher"}
-        </p>
+return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <h1 className="text-4xl font-bold heading">
-          {id ? "Edit Teacher" : "Add Teacher"}
-        </h1>
+        <div className="mb-8">
 
-        <p className="text-gray-500 mt-2">
-          Please fill out the details below to add a teacher.
-        </p>
-      </div>
+            <p className="text-blue-600 dark:text-blue-400 text-sm font-medium mb-3">
+                Teacher Management / {id ? "Edit Teacher" : "Add New Teacher"}
+            </p>
 
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div className="bg-slate-50 px-8 py-5 border-b border-gray-200">
-          <h2 className="text-2xl font-semibold">Teacher Information</h2>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+                {id ? "Edit Teacher" : "Add Teacher"}
+            </h1>
+
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
+                Please fill out the details below to add a teacher.
+            </p>
+
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8">
-          {error && <p className="text-red-500 mb-5">{error}</p>}
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-slate-50 dark:bg-gray-800 px-4 sm:px-6 lg:px-8 py-5 border-b border-gray-200 dark:border-gray-700">
 
-            <div>
-              <label className="block text-sm font-semibold mb-2">Full Name</label>
-              <Input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter teacher name"
-              />
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    Teacher Information
+                </h2>
+
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold mb-2">Experience (Years)</label>
-              <Input
-                type="number"
-                name="experience"
-                value={formData.experience}
-                onChange={handleChange}
-                placeholder="Enter experience"
-              />
-            </div>
+            <form
+                onSubmit={handleSubmit}
+                className="p-4 sm:p-6 lg:p-8"
+            >
 
-            <div>
-              <label className="block text-sm font-semibold mb-2">Phone Number</label>
-              <Input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Enter phone number"
-              />
-            </div>
+                {error && (
+                    <p className="text-red-500 mb-5">
+                        {error}
+                    </p>
+                )}
 
-            <div>
-              <label className="block text-sm font-semibold mb-2">Course</label>
-              <select
-                name="course"
-                value={formData.course}
-                onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3"
-              >
-                <option value="">Select Course</option>
-                {courses.map(course => (
-                  <option key={course._id} value={course._id}>
-                    {course.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-          </div>
+                    <div>
 
-          <div className="border-t border-gray-200 mt-10 pt-8">
+                        <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                            Full Name
+                        </label>
 
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-              <button
-                type="button"
-                onClick={() => navigate("/teacher")}
-                className="px-8 py-3 border rounded-lg"
-              >
-                Cancel
-              </button>
+                        <Input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter teacher name"
+                        />
 
-              <button
-                type="submit"
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                {id ? "Update Teacher" : "Add Teacher"}
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+                    </div>
+
+                    <div>
+
+                        <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                            Experience (Years)
+                        </label>
+
+                        <Input
+                            type="number"
+                            name="experience"
+                            value={formData.experience}
+                            onChange={handleChange}
+                            placeholder="Enter experience"
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                            Phone Number
+                        </label>
+
+                        <Input
+                            type="text"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="Enter phone number"
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                            Course
+                        </label>
+
+                        <select
+                            name="course"
+                            value={formData.course}
+                            onChange={handleChange}
+                            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-4 py-3 outline-none focus:border-blue-600"
+                        >
+
+                            <option value="">
+                                Select Course
+                            </option>
+
+                            {courses.map((course) => (
+
+                                <option
+                                    key={course._id}
+                                    value={course._id}
+                                >
+                                    {course.name}
+                                </option>
+
+                            ))}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div className="border-t border-gray-200 dark:border-gray-700 mt-10 pt-8">
+
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+
+                        <button
+                            type="button"
+                            onClick={() => navigate("/teacher")}
+                            className="px-8 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="submit"
+                            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition"
+                        >
+                            {id ? "Update Teacher" : "Add Teacher"}
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
-  );
+);
 }
 
 export default AddTeacher;

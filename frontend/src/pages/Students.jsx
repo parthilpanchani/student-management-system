@@ -94,9 +94,9 @@ function Students() {
         </p>
     </div>
 
-    <button className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg">
+    <Link to="/add-student" className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg">
         + Add Student
-    </button>
+    </Link>
 
 </div>
             <StudentFilter

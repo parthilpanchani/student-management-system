@@ -248,7 +248,7 @@ function Profile() {
 
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 mt-8">
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm p-8 mt-8">
                 <div className="grid md:grid-cols-3 gap-10 items-center">
                     <div className="flex flex-col items-center">
 
@@ -362,8 +362,7 @@ function Profile() {
                 </div>
 
             </div>
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 mt-8">
-
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm p-8 mt-8">
                 <h2 className="text-2xl font-bold mb-6">
                     Change Password
                 </h2>

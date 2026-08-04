@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import AuthLayout from "../layouts/AuthLayout";
-import Input from "../components/Input";
+import Input from "../ui/Input";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 

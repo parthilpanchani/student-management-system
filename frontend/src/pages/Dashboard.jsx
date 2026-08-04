@@ -36,24 +36,22 @@ async function fetchDashboard() {
     }
 }
 return (
-    <div>
+    <div className="page">
 
         {/* Heading */}
-
         <div className="mb-8">
 
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
                 Dashboard Overview
             </h1>
 
-        <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
                 Welcome back, Admin. Here's what's happening today.
             </p>
 
         </div>
 
-        {/* Cards */}
-
+        {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
             <DashboardCard
@@ -80,7 +78,6 @@ return (
         </div>
 
         {/* Recent Students */}
-
         <div className="mt-8">
 
             <RecentStudents
@@ -91,6 +88,7 @@ return (
 
     </div>
 );
+
 }
 
 

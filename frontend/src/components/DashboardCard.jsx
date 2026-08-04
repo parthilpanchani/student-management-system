@@ -12,7 +12,7 @@ function DashboardCard({
 }) {
 
     const icons = {
-        students: <FiUsers size={22} />,
+            students: <FiUsers size={22} />,
         teachers: <FiUserCheck size={22} />,
         courses: <FiBookOpen size={22} />,
     };

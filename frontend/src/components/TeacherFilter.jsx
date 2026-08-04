@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Input from "../ui/Input";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -33,43 +33,45 @@ function TeacherFilter({
         fetchCourses();
     }, []);
 
-    return (
-        <div className="bg-white shadow-md rounded-xl p-4 mt-6">
+ return (
+    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md rounded-xl p-4 mt-6">
 
-            <div className="flex justify-between items-center gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
 
-                <div className="flex gap-4 flex-1">
+            {/* Search */}
+            <div className="flex-1">
+                <Input
+                    type="text"
+                    placeholder="Search Teacher..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+            </div>
 
-                    <Input
-                        type="text"
-                        placeholder="Search Teacher..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+            {/* Course Filter */}
+            <div className="w-full lg:w-64">
+                <select
+                    value={selectedCourse}
+                    onChange={(e) => setSelectedCourse(e.target.value)}
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-4 py-3 outline-none focus:border-blue-600"
+                >
+                    <option value="">All Courses</option>
 
-                    <select
-                        value={selectedCourse}
-                        onChange={(e) => setSelectedCourse(e.target.value)}
-                        className="border border-gray-300 rounded-lg px-4 py-2"
-                    >
-                        <option value="">All Courses</option>
-
-                        {courses.map((course) => (
-                            <option
-                                key={course._id}
-                                value={course._id}
-                            >
-                                {course.name}
-                            </option>
-                        ))}
-                    </select>
-
-                </div>
-
+                    {courses.map((course) => (
+                        <option
+                            key={course._id}
+                            value={course._id}
+                        >
+                            {course.name}
+                        </option>
+                    ))}
+                </select>
             </div>
 
         </div>
-    );
-}
+
+    </div>
+);
+}   
 
 export default TeacherFilter;

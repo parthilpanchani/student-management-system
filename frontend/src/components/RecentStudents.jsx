@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { FiEye, FiMoreVertical } from "react-icons/fi";
-
+import Card from "../ui/Card";
 function RecentStudents({ students }) {
     return (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mt-8">
+        <Card className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mt-8">
 
             <div className="flex justify-between items-center px-6 py-5">
 
-                <h2 className="text-2xl font-semibold text-gray-800">
+                <h2 className="text-2xl font-semibold">
                     Recent Students
                 </h2>
 
@@ -22,7 +22,7 @@ function RecentStudents({ students }) {
 
             <table className="w-full">
 
-                <thead className="bg-gray-200 text-xs uppercase text-black">
+                <thead className="bg-slate-100 dark:bg-gray-800 text-xs uppercase text-black dark:text-white">
 
                     <tr>
 
@@ -60,11 +60,11 @@ function RecentStudents({ students }) {
 
                                     <div>
 
-                                        <h3 className="font-semibold text-gray-800">
+                                        <h3 className="font-semibold text-gray-800 dark:text-white">
                                             {student.name}
                                         </h3>
 
-                                        <p className="text-sm text-gray-500">
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
                                             {student.email}
                                         </p>
 
@@ -90,7 +90,7 @@ function RecentStudents({ students }) {
 
             </table>
 
-        </div>
+        </Card>
     );
 }
 

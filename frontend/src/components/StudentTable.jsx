@@ -17,7 +17,7 @@ function StudentTable({ students, deleteStudent }) {
                 <div className="overflow-x-auto rounded-2xl lg:overflow-hidden">
                     <table className="w-full min-w-[900px]">
 
-                        <thead className="bg-slate-100 text-xs uppercase text-gray-600">
+                        <thead className="bg-slate-100 dark:bg-gray-900 dark:text-amber-50 text-xs uppercase text-gray-600">
 
                             <tr>
 
@@ -33,91 +33,90 @@ function StudentTable({ students, deleteStudent }) {
 
                         <tbody>
 
-                            {students.map((student) => (
+           {students.map((student) => (
 
-                                <tr
-                                    key={student._id}
-                                    className="border-t border-gray-100 hover:bg-slate-50 transition"
-                                >
+    <tr
+        key={student._id}
+        className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+    >
 
-                                    <td className="px-6 py-5">
+        <td className="px-6 py-5">
 
-                                        <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
 
-                                            <img
-                                                src="https://placehold.co/50x50"
-                                                alt="Student"
-                                                className="w-12 h-12 rounded-full"
-                                            />
+                <img
+                    src="https://placehold.co/50x50"
+                    alt="Student"
+                    className="w-12 h-12 rounded-full"
+                />
 
-                                            <div>
+                <div>
 
-                                                <h3 className="font-semibold text-gray-900">
-                                                    {student.name}
-                                                </h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                        {student.name}
+                    </h3>
 
-                                                <p className="text-sm text-gray-500">
-                                                    {student.email}
-                                                </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {student.email}
+                    </p>
 
-                                            </div>
+                </div>
 
-                                        </div>
+            </div>
 
-                                    </td>
+        </td>
 
-                                    <td className="px-6 py-5 text-gray-700 hidden md:table-cell">
-                                        {student.phone}
-                                    </td>
+        <td className="px-6 py-5 hidden md:table-cell text-gray-700 dark:text-gray-300">
+            {student.phone}
+        </td>
 
-                                    <td className="px-6 py-5">
+        <td className="px-6 py-5">
 
-                                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                                            {student.course?.name}
-                                        </span>
+            <span className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
+                {student.course?.name}
+            </span>
 
-                                    </td>
+        </td>
 
-                                    <td className="px-6 py-5 text-gray-700 capitalize">
-                                        {student.gender}
-                                    </td>
+        <td className="px-6 py-5 capitalize text-gray-700 dark:text-gray-300">
+            {student.gender}
+        </td>
 
-                                    <td className="px-6 py-5">
+        <td className="px-6 py-5">
 
-                                        <div className="flex justify-center items-center gap-5">
+            <div className="flex justify-center items-center gap-5">
 
-                                            <button
-                                                onClick={() => {
-                                                    setSelectedStudent(student);
-                                                    setIsOpen(true);
-                                                }}
-                                                className="text-gray-500 hover:text-blue-600 transition"
-                                            >
-                                                <FiEye size={18} />
-                                            </button>
+                <button
+                    onClick={() => {
+                        setSelectedStudent(student);
+                        setIsOpen(true);
+                    }}
+                    className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                >
+                    <FiEye size={18} />
+                </button>
 
-                                            <Link
-                                                to={`/edit-student/${student._id}`}
-                                                className="text-gray-500 hover:text-green-600 transition"
-                                            >
-                                                <FiEdit2 size={18} />
-                                            </Link>
+                <Link
+                    to={`/edit-student/${student._id}`}
+                    className="text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition"
+                >
+                    <FiEdit2 size={18} />
+                </Link>
 
-                                            <button
-                                                onClick={() => deleteStudent(student._id)}
-                                                className="text-gray-500 hover:text-red-600 transition"
-                                            >
-                                                <FiTrash2 size={18} />
-                                            </button>
+                <button
+                    onClick={() => deleteStudent(student._id)}
+                    className="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition"
+                >
+                    <FiTrash2 size={18} />
+                </button>
 
-                                        </div>
+            </div>
 
-                                    </td>
+        </td>
 
-                                </tr>
+    </tr>
 
-                            ))}
-
+))}
                         </tbody>
 
                     </table>
