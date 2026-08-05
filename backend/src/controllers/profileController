@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const logActivity = require("../utils/activityLogger");
 
 const getProfile = async (req, res, next) => {
     try {
@@ -63,7 +64,13 @@ const updateProfile = async (req, res, next) => {
         user.email = email;
 
         await user.save();
-
+await logActivity({
+    userId: req.user.id,
+    action: "Update",
+    module: "Student",
+    description: `${req.user.email} updated student ${student.name}`,
+    ipAddress: req.ip,
+});
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
@@ -161,7 +168,13 @@ const changePassword = async (req, res, next) => {
         user.password = hashedPassword;
 
         await user.save();
-
+await logActivity({
+    userId: req.user.id,
+    action: "update",
+    module: "Student",
+    description: `${req.user.email} updated student ${student.name}`,
+    ipAddress: req.ip,
+});
         return res.status(200).json({
             success: true,
             message: "Password changed successfully",

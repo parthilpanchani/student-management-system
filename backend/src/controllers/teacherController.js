@@ -1,5 +1,6 @@
 const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
+const logActivity = require("../utils/activityLogger");
 
 const createTeacher = async (req, res, next) => {
     try {
@@ -24,6 +25,13 @@ const createTeacher = async (req, res, next) => {
             experience,
             course,
             phone,
+        });
+        await logActivity({
+            userId: req.user.id,
+            action: "Create",
+            module: "Teacher",
+            description: `${req.user.email} created teacher ${teacher.name}`,
+            ipAddress: req.ip,
         });
         return res.status(201).json({
             success: true,
@@ -131,7 +139,13 @@ const updateTeacher = async (req, res, next) => {
                 message: "Teacher not found"
             });
         }
-
+        await logActivity({
+            userId: req.user.id,
+            action: "update",
+            module: "Teacher",
+            description: `${req.user.email} updated teacher ${teacher.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Teacher updated successfully",
@@ -155,7 +169,13 @@ const deleteTeacher = async (req, res, next) => {
                 message: "Teacher not found"
             });
         }
-
+        await logActivity({
+            userId: req.user.id,
+            action: "Delete",
+            module: "Teacher",
+            description: `${req.user.email} deleted teacher ${teacher.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Teacher deleted successfully"

@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const logActivity = require("../utils/activityLogger");
 
 const createCourse = async (req, res, next) => {
     try {
@@ -19,7 +20,13 @@ const createCourse = async (req, res, next) => {
             fees,
             status,
         });
-
+        await logActivity({
+            userId: req.user.id,
+            action: "Create",
+            module: "Course",
+            description: `${req.user.email} created course ${course.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(201).json({
             success: true,
             message: "Course created successfully",
@@ -135,7 +142,13 @@ const updateCourse = async (req, res, next) => {
         course.status = status;
 
         await course.save();
-
+        await logActivity({
+            userId: req.user.id,
+            action: "Update",
+            module: "Course",
+            description: `${req.user.email} updated course ${course.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Course updated successfully",
@@ -162,7 +175,13 @@ const deleteCourse = async (req, res, next) => {
         }
 
         await Course.findByIdAndDelete(id);
-
+        await logActivity({
+            userId: req.user.id,
+            action: "Delete",
+            module: "Course",
+            description: `${req.user.email} deleted course ${course.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Course deleted successfully"

@@ -8,7 +8,7 @@ const validateStudent = require("../middleware/studentValidation");
 const validateCourse = require("../middleware/courseValidation");
 const validateTeacher = require("../middleware/teacherValidation");
 
-const { createStudent, getAllStudents, getStudentById, updateStudent, deleteStudent } = require("../controllers/studentController");
+const { createStudent, getAllStudents, getStudentById, updateStudent, deleteStudent ,getActivityLogs,getRecentActivity,exportStudents,importStudents} = require("../controllers/studentController");
 const { getDashboard } = require("../controllers/dashboardController");
 const { createCourse, getAllCourses,updateCourse,getCourseById,deleteCourse } = require("../controllers/courseController")
 const { createTeacher,getAllTeacher,getTeacherById,updateTeacher,deleteTeacher } = require("../controllers/teacherController");
@@ -20,6 +20,7 @@ const {
      changePassword,
 } = require("../controllers/profileController");
 const upload = require("../middleware/uploadMiddleware");
+const csvUpload = require("../middleware/csvUpload");
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
@@ -41,6 +42,19 @@ router.get(
     getAllStudents
 );
 router.get(
+    "/students/export",
+    authMiddleware,
+    roleMiddleware("admin", "teacher"),
+    exportStudents
+);
+router.post(
+    "/students/import",
+    authMiddleware,
+    roleMiddleware("admin"),
+    csvUpload.single("file"),
+    importStudents
+);
+router.get(
     "/students/:id",
     authMiddleware,
     roleMiddleware("admin", "teacher"),
@@ -59,6 +73,18 @@ router.delete(
     roleMiddleware("admin", "teacher"),
     deleteStudent
 );
+router.get(
+    "/activity-logs",
+    authMiddleware,
+    roleMiddleware("admin"),
+    getActivityLogs
+);
+router.get(
+    "/activity-logs/recent",
+    authMiddleware,
+    getRecentActivity
+);
+
 router.get("/dashboard",
     authMiddleware,
     roleMiddleware("admin", "teacher"),

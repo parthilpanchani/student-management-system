@@ -8,6 +8,8 @@ function Profile() {
     const [loading, setLoading] = useState(true);
     const fileInputRef = useRef(null);
     const [uploading, setUploading] = useState(false);
+    const [activities, setActivities] = useState([]);
+    const [allActivities, setAllActivities] = useState([]);
     const {
         user,
         setUser,
@@ -199,7 +201,46 @@ function Profile() {
         }
 
     };
+    const fetchRecentActivity = async () => {
+        try {
 
+            const token = localStorage.getItem("token");
+
+            const response = await axios.get(
+                "http://localhost:5000/api/auth/activity-logs/recent",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setActivities(response.data.logs);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const fetchAllActivity = async () => {
+        try {
+
+            const token = localStorage.getItem("token");
+
+            const response = await axios.get(
+                "http://localhost:5000/api/auth/activity-logs",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setAllActivities(response.data.logs);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const handleImageChange = (e) => {
 
         const file = e.target.files[0];
@@ -216,6 +257,7 @@ function Profile() {
             await Promise.all([
                 fetchProfile(),
                 fetchProfileImage(),
+                fetchRecentActivity()
             ]);
 
             setLoading(false);
@@ -331,31 +373,31 @@ function Profile() {
                             </div>
 
                         </div>
-                       
-          <div className=" border-gray-200 mt-10 pt-8">
 
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-                            <input
-                                type="file"
-                                accept="image/*"
-                                ref={fileInputRef}
-                                onChange={handleImageChange}
-                                className="hidden"
-                            />
-                            <button
-                                onClick={() => fileInputRef.current.click()}
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
-                            >
-                                Change Photo
-                            </button>
+                        <div className=" border-gray-200 mt-10 pt-8">
 
-                            <button
-                                onClick={openEditModal}
-                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"
-                            >
-                                Edit Profile
-                            </button>
-</div>
+                            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={fileInputRef}
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                />
+                                <button
+                                    onClick={() => fileInputRef.current.click()}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+                                >
+                                    Change Photo
+                                </button>
+
+                                <button
+                                    onClick={openEditModal}
+                                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"
+                                >
+                                    Edit Profile
+                                </button>
+                            </div>
                         </div>
 
                     </div>
@@ -418,6 +460,110 @@ function Profile() {
                 </div>
 
             </div>
+
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mt-6">
+
+                <div className="flex justify-between items-center mb-5">
+
+                    <h2 className="text-xl font-semibold dark:text-white">
+                        Recent Activity
+                    </h2>
+
+                    <button
+                        onClick={() => {
+                            fetchAllActivity();
+                            setIsOpen(true);
+                        }}
+                        className="text-blue-600 hover:underline"
+                    >
+                        View All
+                    </button>
+
+                </div>
+
+                {activities.length === 0 ? (
+
+                    <p className="text-gray-500">
+                        No recent activity found.
+                    </p>
+
+                ) : (
+
+                    activities.map((activity) => (
+
+                        <div
+                            key={activity._id}
+                            className="border-b last:border-none py-3"
+                        >
+
+                            <p className="font-medium dark:text-white">
+                                {activity.description}
+                            </p>
+
+                            <p className="text-sm text-gray-500">
+
+                                {activity.module}
+
+                            </p>
+
+                        </div>
+
+                    ))
+
+                )}
+
+            </div>
+            <Modal
+    isOpen={isOpen}
+    onRequestClose={() => setIsOpen(false)}
+    ariaHideApp={false}
+    className="bg-white dark:bg-gray-900 w-[95%] md:w-[800px] max-h-[85vh] overflow-y-auto rounded-xl shadow-xl p-6 mx-auto mt-10"
+    overlayClassName="fixed inset-0 bg-black/50 flex justify-center items-start z-50"
+>
+
+    <button
+        onClick={() => setIsOpen(false)}
+        className="absolute top-4 right-4 text-3xl"
+    >
+        ×
+    </button>
+
+    <h2 className="text-2xl font-bold mb-6 dark:text-white">
+        Activity Logs
+    </h2>
+
+    {allActivities.map((activity) => (
+
+        <div
+            key={activity._id}
+            className="border-b py-4"
+        >
+
+            <div className="flex justify-between">
+
+                <div>
+
+                    <p className="font-semibold dark:text-white">
+                        {activity.description}
+                    </p>
+
+                    <p className="text-sm text-gray-500">
+                        {activity.module}
+                    </p>
+
+                </div>
+
+                <span className="text-sm text-gray-400">
+                    {new Date(activity.createdAt).toLocaleString()}
+                </span>
+
+            </div>
+
+        </div>
+
+    ))}
+
+</Modal>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={() => setIsOpen(false)}

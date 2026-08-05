@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const transporter = require("../config/mail");
+const logActivity = require("../utils/activityLogger");
 
 const registerUser = async (req, res) => {
     try {
@@ -98,6 +99,13 @@ const loginUser = async (req, res) => {
                 expiresIn: "7d"
             }
         );
+        await logActivity({
+            userId: user._id,
+            action: "Login",
+            module: "Authentication",
+            description: `${user.name} logged into the system`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Login API Working",
