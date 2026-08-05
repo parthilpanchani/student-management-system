@@ -12,7 +12,7 @@ import {
 function Sidebar({ isOpen, setIsOpen }) {
 
     const navigate = useNavigate();
-
+const role = localStorage.getItem("role");
     const menuClass = ({ isActive }) =>
         `flex items-center gap-4 px-4 py-3 rounded-xl text-[15px] font-medium transition-all duration-200 ${isActive
             ? "bg-blue-600 text-white shadow-md"
@@ -21,6 +21,7 @@ function Sidebar({ isOpen, setIsOpen }) {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.setItem("theme", "light");
         navigate("/", { replace: true });
     };
 
@@ -100,14 +101,18 @@ function Sidebar({ isOpen, setIsOpen }) {
                             <span>Students</span>
                         </NavLink>
 
-                        <NavLink
-                            to="/teacher"
-                            className={menuClass}
-                            onClick={() => setIsOpen(false)}
-                        >
-                            <FiUserCheck size={20} />
-                            <span>Teachers</span>
-                        </NavLink>
+                        
+                            <NavLink
+                                to="/teacher"
+                                className={menuClass}
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <FiUserCheck size={20} />
+                                <span>
+                                    Add Teacher
+                                </span>
+                            </NavLink>
+                 
 
                         <NavLink
                             to="/courses"
@@ -136,21 +141,7 @@ function Sidebar({ isOpen, setIsOpen }) {
 
                     <button
                         onClick={handleLogout}
-                        className="
-w-full
-flex
-items-center
-gap-4
-px-4
-py-3
-rounded-xl
-text-red-500
-dark:text-red-400
-font-medium
-hover:bg-red-50
-dark:hover:bg-red-900/20
-transition
-">
+                        className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-500 dark:text-red-400  font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition">
                         <FiLogOut size={20} />
                         Logout
                     </button>

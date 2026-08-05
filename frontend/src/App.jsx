@@ -14,16 +14,20 @@ import AddCourse from "./pages/AddCourses";
 import Teacher from "./pages/Teacher";
 import AddTeacher from "./pages/AddTeacher";
 import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
+
     <>
 
       <Routes>
         <Route path="/" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
-
+        <Route path="/reset-password/:token" element={<ResetPassword />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="*" element={<NotFound />} />
 
         <Route element={<ProtectedRoute />}>

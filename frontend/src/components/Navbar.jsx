@@ -11,11 +11,11 @@ function Navbar({ setIsOpen }) {
             <div className="flex items-center gap-4">
 
                 <button
-                    onClick={() => setIsOpen(true)}
-                    className="md:hidden text-2xl"
-                >
-                    <FiMenu />
-                </button>
+    onClick={() => setIsOpen(true)}
+    className="md:hidden text-2xl text-gray-700 dark:text-white"
+>
+    <FiMenu />
+</button>
 
                 <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                     Student Management System

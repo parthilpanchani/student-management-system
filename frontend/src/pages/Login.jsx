@@ -6,17 +6,21 @@ import Input from "../ui/Input";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 function Login() {
     const navigate = useNavigate();
-
+const { setTheme } = useTheme();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
     const [error, setError] = useState("");
     const token = localStorage.getItem("token");
-
+useEffect(() => {
+    setTheme("light");
+}, []);
     if (token) {
         return <Navigate to="/dashboard" replace />;
     }
@@ -79,6 +83,14 @@ function Login() {
                 </Button>
                 <p>Don't have an account? <Link
                     to="/register">Sign up</Link></p>
+                  
+    <Link
+        to="/forgot-password"
+        className="text-blue-600 hover:underline text-sm"
+    >
+        Forgot Password?
+    </Link>
+
             </form>
         </AuthLayout>
 

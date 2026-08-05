@@ -5,7 +5,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import Input from "../ui/Input";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
-
+import { Navigate } from "react-router-dom";
 
 function Register() {
     const navigate = useNavigate();
@@ -52,6 +52,8 @@ const token = localStorage.getItem("token");
                     value={formData.name}
                     onChange={handleChange}
                 />
+                 <br />
+                <br />
                 <Input
                     type="email"
                     placeholder="Enter Email"

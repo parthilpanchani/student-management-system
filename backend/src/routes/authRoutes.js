@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser , forgotPassword } = require("../controllers/authController");
+const { registerUser, loginUser , forgotPassword,resetPassword } = require("../controllers/authController");
+
 const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
 const validateStudent = require("../middleware/studentValidation");
@@ -23,10 +24,12 @@ const upload = require("../middleware/uploadMiddleware");
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/forgot-password", forgotPassword);
+router.put("/reset-password/:token", resetPassword);
+
 router.post(
     "/students",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     validateStudent,
     upload.single("profileImage"),
     createStudent
@@ -34,63 +37,63 @@ router.post(
 router.get(
     "/students",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     getAllStudents
 );
 router.get(
     "/students/:id",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     getStudentById
 );
 router.put(
     "/students/:id",
     authMiddleware,
     upload.single("profileImage"),
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     updateStudent
 );
 router.delete(
     "/students/:id",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     deleteStudent
 );
 router.get("/dashboard",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     getDashboard);
 
 router.post(
     "/courses",
     authMiddleware,
     validateCourse,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     createCourse
 );
-router.get("/courses", authMiddleware, roleMiddleware("admin"), getAllCourses);
+router.get("/courses", authMiddleware, roleMiddleware("admin", "teacher"), getAllCourses);
 
-router.get("/courses/:id", authMiddleware, roleMiddleware("admin"), getCourseById);
+router.get("/courses/:id", authMiddleware, roleMiddleware("admin", "teacher"), getCourseById);
 
-router.put("/courses/:id", authMiddleware,validateCourse, roleMiddleware("admin"), updateCourse);
+router.put("/courses/:id", authMiddleware,validateCourse, roleMiddleware("admin", "teacher"), updateCourse);
 
-router.delete("/courses/:id", authMiddleware, roleMiddleware("admin"), deleteCourse);
+router.delete("/courses/:id", authMiddleware, roleMiddleware("admin", "teacher"), deleteCourse);
 
 router.post("/teacher", 
     authMiddleware, 
     validateTeacher ,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "teacher"),
     createTeacher
 );
 
 router.get(
-    "/teacher",authMiddleware,roleMiddleware("admin"),getAllTeacher);
+    "/teacher",authMiddleware,roleMiddleware("admin", "teacher"),getAllTeacher);
 router.get(
-    "/teacher/:id",authMiddleware,roleMiddleware("admin"),getTeacherById);
+    "/teacher/:id",authMiddleware,roleMiddleware("admin", "teacher"),getTeacherById);
 router.put(
-    "/teacher/:id",authMiddleware,validateTeacher,roleMiddleware("admin"),updateTeacher);
+    "/teacher/:id",authMiddleware,validateTeacher,roleMiddleware("admin", "teacher"),updateTeacher);
 router.delete(
-    "/teacher/:id",authMiddleware,roleMiddleware("admin"),deleteTeacher);
+    "/teacher/:id",authMiddleware,roleMiddleware("admin", "teacher"),deleteTeacher);
 
 
 

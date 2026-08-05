@@ -81,7 +81,12 @@ const loginUser = async (req, res) => {
                 message: "Invalid credentials"
             });
         }
-
+        if (user.role !== "admin" && user.role !== "teacher") {
+            return res.status(403).json({
+                success: false,
+                message: "Only Admin and Teacher can login",
+            });
+        }
         const token = jwt.sign(
             {
                 id: user._id,
@@ -162,7 +167,49 @@ const forgotPassword = async (req, res, next) => {
         });
         return res.status(200).json({
             success: true,
-            message: "Reset token generated successfully.",
+            message: "Reset Link Sent successfully.",
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+const resetPassword = async (req, res, next) => {
+    try {
+
+        const { token } = req.params;
+        const { password } = req.body;
+
+        const user = await User.findOne({
+            resetPasswordToken: token,
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid reset token",
+            });
+        }
+
+        if (user.resetPasswordExpire < Date.now()) {
+            return res.status(400).json({
+                success: false,
+                message: "Reset token has expired",
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        user.password = hashedPassword;
+
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Password reset successfully",
         });
 
     } catch (error) {
@@ -172,5 +219,6 @@ const forgotPassword = async (req, res, next) => {
 module.exports = {
     registerUser,
     loginUser,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 };
