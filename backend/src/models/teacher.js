@@ -9,7 +9,7 @@ const teacherSchema = new mongoose.Schema(
         },
 
         experience: {
-            type:String,
+            type:Number,
             required: true,
         },
 

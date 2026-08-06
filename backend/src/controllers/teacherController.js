@@ -50,7 +50,16 @@ const getAllTeacher = async (req, res, next) => {
         const limit = Number(req.query.limit) || 5;
         const search = req.query.search || "";
         const course = req.query.course || "";
+        const   sort = req.query.sort || "";
+        let sortOption = {};
 
+        if (sort === "asc") {
+            sortOption = { experience: 1 };
+        }
+
+        if (sort === "desc") {
+            sortOption = { experience: -1 };
+        }
         const skip = (page - 1) * limit;
 
         const filter = {};
@@ -71,7 +80,8 @@ const getAllTeacher = async (req, res, next) => {
         const teachers = await Teacher.find(filter)
             .populate("course", "name")
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .sort(sortOption);
 
         return res.status(200).json({
             success: true,

@@ -12,14 +12,14 @@ function Teacher() {
     const [totalPages, setTotalPages] = useState(1);
     const [totalTeachers, setTotalTeachers] = useState(0);
     const [selectedCourse, setSelectedCourse] = useState("");
-
+    const [sort, setSort] = useState("");
     const fetchTeachers = async () => {
         try {
 
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:5000/api/auth/teacher?page=${page}&limit=5&search=${search}&course=${selectedCourse}`,
+                `http://localhost:5000/api/auth/teacher?page=${page}&limit=5&search=${search}&course=${selectedCourse}&sort=${sort}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -38,11 +38,11 @@ function Teacher() {
 
     useEffect(() => {
         fetchTeachers();
-    }, [page, search, selectedCourse]);
+    }, [page, search, selectedCourse, sort]);
 
     useEffect(() => {
         setPage(1);
-    }, [search, selectedCourse]);
+    }, [search, selectedCourse, sort]);
 
     const limit = 5;
 
@@ -109,6 +109,8 @@ function Teacher() {
                 setSearch={setSearch}
                 selectedCourse={selectedCourse}
                 setSelectedCourse={setSelectedCourse}
+                sort={sort}
+                setSort={setSort}
             />
 
             {/* Table */}

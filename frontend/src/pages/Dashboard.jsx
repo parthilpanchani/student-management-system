@@ -3,91 +3,107 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import DashboardCard from "../components/DashboardCard";
 import RecentStudents from "../components/RecentStudents";
+import StudentsByCourseChart from "../components/charts/StudentsByCourseChart";
+import GenderChart from "../components/charts/GenderChart";
 function Dashboard() {
-    const [dashboardData, setDashboardData] = useState({
-    totalStudents: 0,
-    recentStudents: [],
-    totalCourse: 0,
-    totalTeacher: 0,
-    
-});
+    const[dashboardData, setDashboardData] = useState({
+        totalStudents: 0,
+        totalTeacher: 0,
+        totalCourse: 0,
 
-useEffect(() => {
-    fetchDashboard();
-}, []);
+        recentStudents: [],
 
-async function fetchDashboard() {
-    try {
-        
-        const token = localStorage.getItem("token");
+        studentsByCourse: [],
+        genderDistribution: []
+    });
+    useEffect(() => {
+        fetchDashboard();
+    }, []);
 
-        const response = await axios.get(
-            "http://localhost:5000/api/auth/dashboard",
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
+    async function fetchDashboard() {
+        try {
 
-        setDashboardData(response.data);
-    } catch (error) {
-        console.log(error);
+            const token = localStorage.getItem("token");
+
+            const response = await axios.get(
+                "http://localhost:5000/api/auth/dashboard",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setDashboardData(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
-}
-return (
-    <div className="page">
+    return (
+        <div className="page">
 
-        {/* Heading */}
-        <div className="mb-8">
+            {/* Heading */}
+            <div className="mb-8">
 
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-                Dashboard Overview
-            </h1>
+                <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+                    Dashboard Overview
+                </h1>
 
-            <p className="text-gray-500 dark:text-gray-400 mt-2">
-                Welcome back, Admin. Here's what's happening today.
-            </p>
+                <p className="text-gray-500 dark:text-gray-400 mt-2">
+                    Welcome back, Admin. Here's what's happening today.
+                </p>
+
+            </div>
+
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <DashboardCard
+                    title="Total Students"
+                    value={dashboardData.totalStudents}
+                    icon="students"
+                    badge="+12%"
+                />
+
+                <DashboardCard
+                    title="Total Teachers"
+                    value={dashboardData.totalTeacher}
+                    icon="teachers"
+                    badge="Stable"
+                />
+
+                <DashboardCard
+                    title="Total Courses"
+                    value={dashboardData.totalCourse}
+                    icon="courses"
+                    badge="3 Active"
+                />
+
+            </div>
+            {/* Charts */}
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+
+                <StudentsByCourseChart
+                    data={dashboardData.studentsByCourse}
+                />
+
+                <GenderChart
+                    data={dashboardData.genderDistribution}
+                />
+
+            </div>
+            {/* Recent Students */}
+            <div className="mt-8">
+
+                <RecentStudents
+                    students={dashboardData.recentStudents}
+                />
+
+            </div>
 
         </div>
-
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
-            <DashboardCard
-                title="Total Students"
-                value={dashboardData.totalStudents}
-                icon="students"
-                badge="+12%"
-            />
-
-            <DashboardCard
-                title="Total Teachers"
-                value={dashboardData.totalTeacher}
-                icon="teachers"
-                badge="Stable"
-            />
-
-            <DashboardCard
-                title="Total Courses"
-                value={dashboardData.totalCourse}
-                icon="courses"
-                badge="3 Active"
-            />
-
-        </div>
-
-        {/* Recent Students */}
-        <div className="mt-8">
-
-            <RecentStudents
-                students={dashboardData.recentStudents}
-            />
-
-        </div>
-
-    </div>
-);
+    );
 
 }
 

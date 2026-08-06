@@ -65,6 +65,7 @@ const createStudent = async (req, res, next) => {
 };
 const getAllStudents = async (req, res, next) => {
     try {
+
         const {
             page = 1,
             limit = 5,
@@ -109,6 +110,8 @@ const getAllStudents = async (req, res, next) => {
             .sort(sort)
             .limit(limitNumber);
 
+
+        console.time("images");
         const studentsWithImages = students.map((student) => {
             const studentObj = student.toObject();
 
@@ -128,7 +131,7 @@ const getAllStudents = async (req, res, next) => {
 
             return studentObj;
         });
-
+        console.timeEnd("images");
         return res.status(200).json({
             success: true,
             students: studentsWithImages,
@@ -351,7 +354,7 @@ const importStudents = async (req, res, next) => {
                         continue;
                     }
 
-            
+
                     const validationData = {
                         name: row.Name.trim(),
                         email: row.Email.trim(),

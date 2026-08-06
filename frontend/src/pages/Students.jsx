@@ -17,8 +17,9 @@ function Students() {
     const [selectedGender, setSelectedGender] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const fileInputRef = useRef(null);
-
+    const [loading, setLoading] = useState(true);
     async function fetchStudents() {
+        setLoading(true);
         try {
 
             const token = localStorage.getItem("token");
@@ -40,6 +41,8 @@ function Students() {
         }
         catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
     const handleImport = async (e) => {
@@ -206,6 +209,7 @@ Skipped : ${response.data.skipped}`
                     />
                 </div>
             </div>
+
             <StudentFilter
                 search={search}
                 setSearch={setSearch}
@@ -214,12 +218,18 @@ Skipped : ${response.data.skipped}`
                 selectedGender={selectedGender}
                 setSelectedGender={setSelectedGender}
             />
-
-            <StudentTable
-                students={students}
-                deleteStudent={deleteStudent}
-            />
-
+            {
+                loading ? (
+                    <div className="text-center py-20">
+                        Loading...
+                    </div>
+                ) : (
+                    <StudentTable
+                        students={students}
+                        deleteStudent={deleteStudent}
+                    />
+                )
+            }
             <Pagination
                 page={page}
                 setPage={setPage}
