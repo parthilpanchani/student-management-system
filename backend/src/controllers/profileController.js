@@ -69,25 +69,22 @@ const updateProfile = async (req, res, next) => {
         user.email = email;
 
         await user.save();
+
         await logActivity({
             userId: req.user.id,
             action: "Update",
-            module: "Student",
-            description: `${req.user.email} updated student ${student.name}`,
+            module: "Profile",
+            description: `${user.name} updated their profile`,
             ipAddress: req.ip,
         });
+
         return res.status(200).json({
             success: true,
-            message: "Profile updated successfully",
-            user: {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-            },
+            user,
         });
 
     } catch (error) {
+        console.error(error);
         next(error);
     }
 };
@@ -175,9 +172,9 @@ const changePassword = async (req, res, next) => {
         await user.save();
         await logActivity({
             userId: req.user.id,
-            action: "update",
-            module: "Student",
-            description: `${req.user.email} updated student ${student.name}`,
+            action: "Update",
+            module: "Profile",
+            description: `${req.user.email} updated their profile`,
             ipAddress: req.ip,
         });
         return res.status(200).json({

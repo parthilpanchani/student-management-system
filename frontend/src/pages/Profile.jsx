@@ -26,6 +26,8 @@ function Profile() {
         confirmPassword: "",
     });
     const [isOpen, setIsOpen] = useState(false);
+    const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
+
     const openEditModal = () => {
 
         setFormData({
@@ -472,7 +474,7 @@ function Profile() {
                     <button
                         onClick={() => {
                             fetchAllActivity();
-                            setIsOpen(true);
+                            setIsActivityModalOpen(true);
                         }}
                         className="text-blue-600 hover:underline"
                     >
@@ -514,56 +516,56 @@ function Profile() {
 
             </div>
             <Modal
-    isOpen={isOpen}
-    onRequestClose={() => setIsOpen(false)}
-    ariaHideApp={false}
-    className="bg-white dark:bg-gray-900 w-[95%] md:w-[800px] max-h-[85vh] overflow-y-auto rounded-xl shadow-xl p-6 mx-auto mt-10"
-    overlayClassName="fixed inset-0 bg-black/50 flex justify-center items-start z-50"
->
+                isOpen={isActivityModalOpen}
+                onRequestClose={() => setIsActivityModalOpen(false)}
+                ariaHideApp={false}
+                className="relative bg-white dark:bg-gray-900 w-[95%] md:w-[800px] max-h-[85vh] overflow-y-auto rounded-xl shadow-xl p-6 mx-auto mt-10"
+                overlayClassName="fixed inset-0 bg-black/50 flex justify-center items-start z-50"
+            >
 
-    <button
-        onClick={() => setIsOpen(false)}
-        className="absolute top-4 right-4 text-3xl"
-    >
-        ×
-    </button>
+                <button
+                    onClick={() => setIsActivityModalOpen(false)}
+                    className="absolute top-4 right-4 text-3xl"
+                >
+                    ×
+                </button>
 
-    <h2 className="text-2xl font-bold mb-6 dark:text-white">
-        Activity Logs
-    </h2>
+                <h2 className="text-2xl font-bold mb-6 dark:text-white">
+                    Activity Logs
+                </h2>
 
-    {allActivities.map((activity) => (
+                {allActivities.map((activity) => (
 
-        <div
-            key={activity._id}
-            className="border-b py-4"
-        >
+                    <div
+                        key={activity._id}
+                        className="border-b py-4"
+                    >
 
-            <div className="flex justify-between">
+                        <div className="flex justify-between">
 
-                <div>
+                            <div>
 
-                    <p className="font-semibold dark:text-white">
-                        {activity.description}
-                    </p>
+                                <p className="font-semibold dark:text-white">
+                                    {activity.description}
+                                </p>
 
-                    <p className="text-sm text-gray-500">
-                        {activity.module}
-                    </p>
+                                <p className="text-sm text-gray-500">
+                                    {activity.module}
+                                </p>
 
-                </div>
+                            </div>
 
-                <span className="text-sm text-gray-400">
-                    {new Date(activity.createdAt).toLocaleString()}
-                </span>
+                            <span className="text-sm text-gray-400">
+                                {new Date(activity.createdAt).toLocaleString()}
+                            </span>
 
-            </div>
+                        </div>
 
-        </div>
+                    </div>
 
-    ))}
+                ))}
 
-</Modal>
+            </Modal>
             <Modal
                 isOpen={isOpen}
                 onRequestClose={() => setIsOpen(false)}

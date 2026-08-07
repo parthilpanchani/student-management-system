@@ -199,7 +199,6 @@ const updateStudent = async (req, res, next) => {
         student.age = req.body.age;
         student.gender = req.body.gender;
 
-        // Update image only if a new one is uploaded
         if (req.file) {
             student.profileImage = {
                 data: req.file.buffer,
