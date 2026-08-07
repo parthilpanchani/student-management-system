@@ -111,7 +111,7 @@ const getAllStudents = async (req, res, next) => {
             .limit(limitNumber);
 
 
-        console.time("images");
+
         const studentsWithImages = students.map((student) => {
             const studentObj = student.toObject();
 
@@ -131,7 +131,7 @@ const getAllStudents = async (req, res, next) => {
 
             return studentObj;
         });
-        console.timeEnd("images");
+  
         return res.status(200).json({
             success: true,
             students: studentsWithImages,

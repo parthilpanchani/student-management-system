@@ -30,18 +30,23 @@ const getProfileImage = async (req, res, next) => {
 
         const user = await User.findById(req.user.id);
 
+
         if (!user || !user.profileImage?.data) {
+
+
             return res.status(404).json({
                 success: false,
                 message: "Profile image not found",
             });
         }
 
+
         res.set("Content-Type", user.profileImage.contentType);
 
         return res.send(user.profileImage.data);
 
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
@@ -64,13 +69,13 @@ const updateProfile = async (req, res, next) => {
         user.email = email;
 
         await user.save();
-await logActivity({
-    userId: req.user.id,
-    action: "Update",
-    module: "Student",
-    description: `${req.user.email} updated student ${student.name}`,
-    ipAddress: req.ip,
-});
+        await logActivity({
+            userId: req.user.id,
+            action: "Update",
+            module: "Student",
+            description: `${req.user.email} updated student ${student.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
@@ -89,7 +94,6 @@ await logActivity({
 
 const uploadProfileImage = async (req, res, next) => {
     try {
-
         if (!req.file) {
             return res.status(400).json({
                 success: false,
@@ -119,6 +123,7 @@ const uploadProfileImage = async (req, res, next) => {
         });
 
     } catch (error) {
+        console.error("Upload Profile Image Error:", error);
         next(error);
     }
 };
@@ -168,13 +173,13 @@ const changePassword = async (req, res, next) => {
         user.password = hashedPassword;
 
         await user.save();
-await logActivity({
-    userId: req.user.id,
-    action: "update",
-    module: "Student",
-    description: `${req.user.email} updated student ${student.name}`,
-    ipAddress: req.ip,
-});
+        await logActivity({
+            userId: req.user.id,
+            action: "update",
+            module: "Student",
+            description: `${req.user.email} updated student ${student.name}`,
+            ipAddress: req.ip,
+        });
         return res.status(200).json({
             success: true,
             message: "Password changed successfully",
