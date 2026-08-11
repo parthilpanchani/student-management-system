@@ -7,20 +7,16 @@ import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useTheme } from "../context/ThemeContext";
 
 function Login() {
     const navigate = useNavigate();
-const { setTheme } = useTheme();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
     const [error, setError] = useState("");
     const token = localStorage.getItem("token");
-useEffect(() => {
-    setTheme("light");
-}, []);
+
     if (token) {
         return <Navigate to="/dashboard" replace />;
     }

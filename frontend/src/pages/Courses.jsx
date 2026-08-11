@@ -80,11 +80,11 @@ function Courses() {
 
                 <div>
 
-                    <h1 className="text-5xl font-bold text-gray-900">
+                    <h1 className="text-3xl md:text-4xl font-bold">
                         Courses
                     </h1>
 
-                    <p className="text-gray-500 mt-2 text-lg">
+                    <p className="text-gray-500 mt-2">
                         Manage and organize all available courses.
                     </p>
 
